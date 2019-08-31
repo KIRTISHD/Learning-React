@@ -1,5 +1,3 @@
-I started Learning React from Srcimba
-
 I used npm to start working on React.
 
 You can have these starting files when creating new project-
