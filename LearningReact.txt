@@ -1,0 +1,123 @@
+I started Learning React from Srcimba
+
+I used npm to start working on React.
+
+You can have these starting files when creating new project-
+1. Index.js
+2. index.html
+3. style.css
+
+index.html will have a div with the id root. This 'root' id will be replaced with the code we will write in index.js
+
+now in index.js, we will first imort 2 basic dependencies needed for React.
+1. React 
+2. ReactDOM
+
+1. React- this will be imported in almost every component/file we will use further. This is mainly to convert HTML code into JSX(Javascript version of HTML).
+2. ReactDOM - 
+
+Main function we will use from ReactDOM is ReactDOM.render. it takes 2 parameters(what do i want to render, where do i want to render). topmost .render may look like (something, document.getElementById("root"))
+'something' here can point to a component or just some html code.
+	now question arises? How am i able to write html code directly into javascript. It is because the html code is converted into JSX format(something REACT people came up with).
+	ALSO IMPORTANT- you cannot render 2 JSX elements in render method 
+	eg-
+		render(<h1> HELLO </h1>,  document.getElementById("root")) ------ OK
+		render(<h1> HELLO </h1> <h1> WORLD</h1>,  document.getElementById("root")) ------ NOT OK (since 2 tags are present)
+		render(<div> <h1>HELLO</h1> <h1>WORLD</h1> </div>,  document.getElementById("root")) ------ OK (since everything is in single element which is div)
+	
+	To render more than one element, you can group HTML elements in a component.
+____________________________________________________________________________________________________________________________
+Component-
+
+you can create Components and they will behave as a separate React element. eg-
+	ReactDOM.render(<App />,  document.getElementById("root"))
+	function App(){
+		return (<div> <h1>HELLO</h1> <h1>WORLD</h1> </div> )
+	}
+	
+	just make the function return html(JSX) code . You can have it in same file or different file
+	
+	---------index.js -----
+	
+	import React from "react"
+	import ReactDOM from "react-dom"
+	import App from "./App"
+	
+	ReactDOM.render(<App />, document.getElementById("root"))
+	----------------xxxxx--------
+	
+	----------App.js----------
+	
+	import React from "react"
+	
+	function App() {
+		return (<div> <h1>HELLO</h1> <h1>WORLD</h1> </div>)
+	}
+	export default App // used as per ES6
+	----------------xxxxx--------
+	
+you can also nest components if you like. JUST REMEMBER, at last, render function( or even return in App here) should return a single element(can nest elements inside that single element).
+
+____________________________________________________________________________________________________________________________
+
+Adding CSS to these elements.
+
+Components directly cannot receive CSS properties. We have to mention properties inside html tags. way to do it is --
+
+	<h1 className="h1-hello"> Hello World! </h1>
+	
+	and in css, you can access it directly like you access classes.
+
+____________________________________________________________________________________________________________________________
+Converting JSX to javascript and back
+
+	to use javascript in html tags, use curly braces {}
+		eg ------- in App.js -----------
+		import React from "react"
+	
+		function App() {
+		const d = new Date()
+			return (<div> { d.getHours() %12 } </div>)
+		}
+		export default App
+		----------------------xxxxx--------
+		
+	another example is when using inline sytling--
+	<h1 style="color:red"> Hello </h1>			----- this will give error as we are not using HTML directly(is converted to JSX so will give error), so we convert it into object.
+	
+	<h1 style={color:"red"}> Hello </h1> -- again will give error as we want to use javascript in JSX(which we are not doing right now) so we put another cruly braces to convert it into javascript
+	
+	<h1 style={{color:"red"}}> Hello </h1> -- with another curly braces, now it will work.
+	
+	Now let's add another css property-
+	<h1 style={{color:"red", background-color:"black"}}> Hello </h1> -- this will give error again as in curly braces we are in javascript and we cannot have - in property name. so we can use camelcase instead like this-
+	
+	<h1 style={}> Hello </h1> 
+	
+	we can also make a variable for style and put it like this - 
+	
+	const styles = {color:"red", backgroundColor:"black", fontSize:"20px"}
+	<h1 style={styles}> Hello </h1> 
+	
+	we can get creative with it as css properties are not objects.
+	like changing css property as per time. eg-
+	
+	eg ------- in App.js -----------
+		import React from "react"
+	
+		function App() {
+		const styles = {fontSize:"20px"}
+		let t
+		const d = new Date()
+		if (d.getHours() <17 ){
+			t = "day"
+			styles.color = "red"
+		}
+		else{
+			t = "night"
+			styles.color = "night"
+		}
+			return (<div style={styles}> { t } </div>)
+		}
+		export default App
+		----------------------xxxxx--------
